@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/index.js";
+import { RoleEnum } from "../config.js";
 
 export const UserModel = sequelize.define('User', {
     // 在这里定义模型属性
@@ -17,8 +18,12 @@ export const UserModel = sequelize.define('User', {
         allowNull: false,
     },
     role: {
-        type: DataTypes.ARRAY(DataTypes.ENUM),
+        type: DataTypes.ENUM,
+        values: [RoleEnum.ADMIN, RoleEnum.STUDENT, RoleEnum.SUPER],
         allowNull: false,
+    },
+    permit: {
+      
     },
     token: {
         type: DataTypes.STRING

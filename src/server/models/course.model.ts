@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/index.js";
-import { XQEnum } from "../config.js";
+import { KcEnum, XQEnum } from "../config.js";
 
 export const CourseModel = sequelize.define('Course', {
   /**
@@ -46,6 +46,14 @@ export const CourseModel = sequelize.define('Course', {
   xq: {
     type: DataTypes.ENUM,
     values: [XQEnum.FIRST, XQEnum.SECOND]
+  },
+  /**
+   * 开课时间，数组格式
+   */
+  openTime: {
+    type: DataTypes.ARRAY(DataTypes.ENUM),
+    values: Object.values(KcEnum),
+    allowNull: false,
   }
 }, {
   // 这是其他模型参数
