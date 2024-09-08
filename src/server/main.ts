@@ -7,6 +7,7 @@ import { UserModel } from "./models/user.model.js";
 import { RoleEnum } from "./config.js";
 import { md5 } from "./tools/crypt.js";
 import { authRouter } from "./routers/auth.route.js";
+import { xnRouter } from "./routers/xn.route.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
+app.use('/api/xn', xnRouter)
 
 checkDbConnection().then(() => {
   ViteExpress.listen(app, 3000, () =>

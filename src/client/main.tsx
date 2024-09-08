@@ -12,6 +12,7 @@ import MyLayout from "./layout";
 import HomePage from "./views/home/Home";
 import LoginPage from "./views/login/Login";
 import AccountPage from "./views/account/Account";
+import XnPage from "./views/xn/Xn";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "account",
         element: <AccountPage />,
+      },
+      {
+        path: "xn",
+        element: <XnPage />,
       },
     ]
   },

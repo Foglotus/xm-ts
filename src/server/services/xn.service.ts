@@ -71,14 +71,43 @@ async function enableXn(id:number):Promise<BaseFunRes<XnModel>> {
 }
 
 /**
+ * 根据id获取学年
+ */
+async function getXnById(id:number):Promise<BaseFunRes<XnModel>> {
+    try {
+        const xn = await XnModel.findByPk(id);
+        return [null, xn]
+    }catch(e) {
+        return ['学年获取失败', null]
+    }
+}
+
+/**
  * 学年列表
  */
-async function getXnList():Promise<BaseFunRes<XnModel[]>> {
+async function getXnList(params: {current: number, pageSize: number, name?: string, username?: string}) {
     try {
-        const xnList = await XnModel.findAll();
-        return [null, xnList]
+        const { current, pageSize } = params
+        // 根据name和username过滤，有就加入where条件
+        const xns = await XnModel.findAll({
+            offset: (current - 1) * pageSize,
+            limit: pageSize,
+        });
+        return [null, xns];
+    }catch (e: any) {
+        console.error("getXnList 查询数据库出错", e)
+        return ['查询数据库出错']
+    }
+}
+/**
+ * 获取学年总量
+ */
+async function getXnCount():Promise<BaseFunRes<number>> {
+    try {
+        const count = await XnModel.count();
+        return [null, count]
     }catch(e) {
-        return ['学年列表获取失败', null]
+        return ['学年总量获取失败', null]
     }
 }
 
@@ -87,5 +116,7 @@ export {
     updateXn,
     disableXn,
     enableXn,
-    getXnList
+    getXnList,
+    getXnById,
+    getXnCount
 }
