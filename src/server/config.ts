@@ -18,6 +18,10 @@ export enum PermitEnum {
   ADD_COURSE = "add_course", // 添加课程
   EDIT_COURSE =  "edit_course", // 编辑课程
   DEL_COURSE = "删除课程",
+  // 添加用户，编辑用户，删除用户
+  ADD_USER = "add_user",
+  EDIT_USER = "edit_user",
+  DEL_USER = "del_user",
 }
 
 export enum XQEnum {

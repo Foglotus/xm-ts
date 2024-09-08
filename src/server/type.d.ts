@@ -1,0 +1,1 @@
+type BaseFunRes<T = null> = [string|null, T | null] 
