@@ -153,3 +153,165 @@ export enum RoleEnum {
     FRIDAY_EIGHTH = "58",
   }
   
+  export const OpenTimeOptions = [
+    {
+      label: "星期一第一节课",
+      value: KcEnum.MONDAY_FIRST
+    },
+    {
+      label: "星期一第二节课",
+      value: KcEnum.MONDAY_SECOND
+    },
+    {
+      label: "星期一第三节课",
+      value: KcEnum.MONDAY_THIRD
+    },
+    {
+      label: "星期一第四节课",
+      value: KcEnum.MONDAY_FOURTH
+    },
+    {
+      label: "星期一第五节课",
+      value: KcEnum.MONDAY_FIFTH
+    },
+    {
+      label: "星期一第六节课",
+      value: KcEnum.MONDAY_SIXTH
+    },
+    {
+      label: "星期一第七节课",
+      value: KcEnum.MONDAY_SEVENTH
+    },
+    {
+      label: "星期一第八节课",
+      value: KcEnum.MONDAY_EIGHTH
+    },
+    {
+      label: "星期二第一节课",
+      value: KcEnum.TUESDAY_FIRST
+    },
+    {
+      label: "星期二第二节课",
+      value: KcEnum.TUESDAY_SECOND
+    },
+    {
+      label: "星期二第三节课",
+      value: KcEnum.TUESDAY_THIRD
+    },
+    {
+      label: "星期二第四节课",
+      value: KcEnum.TUESDAY_FOURTH
+    },
+    {
+      label: "星期二第五节课",
+      value: KcEnum.TUESDAY_FIFTH
+    },
+    {
+      label: "星期二第六节课",
+      value: KcEnum.TUESDAY_SIXTH
+    },
+    {
+      label: "星期二第七节课",
+      value: KcEnum.TUESDAY_SEVENTH
+    },
+    {
+      label: "星期二第八节课",
+      value: KcEnum.TUESDAY_EIGHTH
+    },
+    {
+      label: "星期三第一节课",
+      value: KcEnum.WEDNESDAY_FIRST
+    },
+    {
+      label: "星期三第二节课",
+      value: KcEnum.WEDNESDAY_SECOND
+    },
+    {
+      label: "星期三第三节课",
+      value: KcEnum.WEDNESDAY_THIRD
+    },
+    {
+      label: "星期三第四节课",
+      value: KcEnum.WEDNESDAY_FOURTH
+    },
+    {
+      label: "星期三第五节课",
+      value: KcEnum.WEDNESDAY_FIFTH
+    },
+    {
+      label: "星期三第六节课",
+      value: KcEnum.WEDNESDAY_SIXTH
+    },
+    {
+      label: "星期三第七节课",
+      value: KcEnum.WEDNESDAY_SEVENTH
+    },
+    {
+      label: "星期三第八节课",
+      value: KcEnum.WEDNESDAY_EIGHTH
+    },
+    {
+      label: "星期四第一节课",
+      value: KcEnum.THURSDAY_FIRST
+    },
+    {
+      label: "星期四第二节课",
+      value: KcEnum.THURSDAY_SECOND
+    },
+    {
+      label: "星期四第三节课",
+      value: KcEnum.THURSDAY_THIRD
+    },
+    {
+      label: "星期四第四节课",
+      value: KcEnum.THURSDAY_FOURTH
+    },
+    {
+      label: "星期四第五节课",
+      value: KcEnum.THURSDAY_FIFTH
+    },
+    {
+      label: "星期四第六节课",
+      value: KcEnum.THURSDAY_SIXTH
+    },
+    {
+      label: "星期四第七节课",
+      value: KcEnum.THURSDAY_SEVENTH
+    },
+    {
+      label: "星期四第八节课",
+      value: KcEnum.THURSDAY_EIGHTH
+    },
+    {
+      label: "星期五第一节课",
+      value: KcEnum.FRIDAY_FIRST
+    },
+    {
+      label: "星期五第二节课",
+      value: KcEnum.FRIDAY_SECOND
+    },
+    {
+      label: "星期五第三节课",
+      value: KcEnum.FRIDAY_THIRD
+    },
+    {
+      label: "星期五第四节课",
+      value: KcEnum.FRIDAY_FOURTH
+    },
+    {
+      label: "星期五第五节课",
+      value: KcEnum.FRIDAY_FIFTH
+    },
+    {
+      label: "星期五第六节课",
+      value: KcEnum.FRIDAY_SIXTH
+    },
+    {
+      label: "星期五第七节课",
+      value: KcEnum.FRIDAY_SEVENTH
+    },
+    {
+      label: "星期五第八节课",
+      value: KcEnum.FRIDAY_EIGHTH
+    }
+  ]

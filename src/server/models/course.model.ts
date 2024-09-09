@@ -11,13 +11,14 @@ export class CourseModel extends Model<
   declare id: CreationOptional<number>;
   declare code: string;
   declare name: string;
-  declare description: string;
+  declare description?: string;
   declare capacity: number;
   declare selected: number;
   declare xnId: ForeignKey<XnModel['id']>;
   declare xn?: NonAttribute<XnModel>;
   declare xq: XQEnum;
-  declare openTime: KcEnum[];
+  declare openTime: string;
+  declare status:number
 }
 
 CourseModel.init({
@@ -74,9 +75,13 @@ CourseModel.init({
    * 开课时间，数组格式
    */
   openTime: {
-    type: DataTypes.ARRAY(DataTypes.ENUM),
-    values: Object.values(KcEnum),
+    type: DataTypes.STRING,
     allowNull: false,
+  },
+  status:{
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
   }
 }, {
   // 这是其他模型参数

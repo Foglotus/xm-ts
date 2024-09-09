@@ -13,6 +13,7 @@ import HomePage from "./views/home/Home";
 import LoginPage from "./views/login/Login";
 import AccountPage from "./views/account/Account";
 import XnPage from "./views/xn/Xn";
+import CoursePage from "./views/course/Course";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
         path: "xn",
         element: <XnPage />,
       },
+      {
+        path: 'course',
+        element: <CoursePage />
+      }
     ]
   },
   {

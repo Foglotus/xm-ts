@@ -8,6 +8,7 @@ import { RoleEnum } from "./config.js";
 import { md5 } from "./tools/crypt.js";
 import { authRouter } from "./routers/auth.route.js";
 import { xnRouter } from "./routers/xn.route.js";
+import { courseRouter } from "./routers/course.route.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/xn', xnRouter)
+app.use('/api/course', courseRouter)
 
 checkDbConnection().then(() => {
   ViteExpress.listen(app, 3000, () =>
