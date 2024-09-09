@@ -23,11 +23,11 @@ export class ChooseModel extends Model<
  * 选课表
  */
 ChooseModel.init({
-  id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    autoIncrement: true,
-    primaryKey: true
-  },
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true
+    },
     // 在这里定义模型属性，学年id
     xnId: {
       type: DataTypes.BIGINT,
@@ -45,8 +45,7 @@ ChooseModel.init({
     },
     // 学期
     xq: {
-      type: DataTypes.ENUM,
-      values: [XQEnum.FIRST, XQEnum.SECOND],
+      type: DataTypes.STRING,
       allowNull: false,
     },
     /**

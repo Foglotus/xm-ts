@@ -1,11 +1,11 @@
-import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { Button, Dropdown, Space, Tag } from 'antd';
+import { ProTable } from '@ant-design/pro-components';
+import { Button, Space, Tag } from 'antd';
 import { useRef, useState } from 'react';
 import request from 'umi-request';
 import Operator from './Operator';
-import { OpenTimeOptions, PermitEnum, PermitOptions } from '../../config';
+import { KcEnum, OpenTimeOptions } from '../../config';
 
 type GithubIssueItem = {
   id: number
@@ -65,6 +65,7 @@ const CoursePage = () => {
       title: '开课人数',
       dataIndex: 'capacity',
       ellipsis: true,
+      search: false,
       formItemProps: {
         rules: [
           {
@@ -82,7 +83,7 @@ const CoursePage = () => {
       renderText(text) {
         return (
           <Space wrap>
-            {text?.split(',').map((item: PermitEnum) => OpenTimeOptions.find(op => op.value === item)?.label)?.map(((l:any) => <Tag>{l}</Tag>))}
+            {text?.split(',').map((item: KcEnum) => OpenTimeOptions.find(op => op.value === item)?.label)?.map(((l:any) => <Tag>{l}</Tag>))}
           </Space>
         );
       },
