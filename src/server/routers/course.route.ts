@@ -1,9 +1,7 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
-import { addCourse, getCourseByCourseId, getCourseList, getCourseSum, updateCourse } from '../services/course.service.js';
-import { md5 } from '../tools/crypt.js';
-import { PermitEnum, SECRET } from '../config.js';
-import { checkPermit, checkRole, checkToken } from '../middleware/auth.middleware.js';
+import { addCourse, getCourseList, getCourseSum, updateCourse } from '../services/course.service.js';
+import { PermitEnum } from '../config.js';
+import { checkPermit, checkToken } from '../middleware/auth.middleware.js';
 
 
 export const courseRouter = express.Router()
@@ -21,7 +19,7 @@ courseRouter.post('/add',checkToken, checkPermit(PermitEnum.ADD_COURSE) , async 
 
 // 更新用户，需要管理员权限
 courseRouter.post('/update', checkToken, checkPermit(PermitEnum.EDIT_COURSE), async (req, res) => {
-    let { id, name, coursename, password, role, permit } = req.body;
+    let { id } = req.body;
     const [_err] = await updateCourse(id, req.body);
     if (!_err) {
       return  res.json({ code: 0, message: 'Course updated successfully' });

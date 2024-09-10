@@ -14,6 +14,7 @@ import LoginPage from "./views/login/Login";
 import AccountPage from "./views/account/Account";
 import XnPage from "./views/xn/Xn";
 import CoursePage from "./views/course/Course";
+import ChoosePage from "./views/choose/Choose";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'course',
         element: <CoursePage />
+      },
+      {
+        path: 'mine',
+        element: <ChoosePage />
       }
     ]
   },

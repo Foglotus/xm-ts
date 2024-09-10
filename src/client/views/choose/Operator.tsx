@@ -1,24 +1,25 @@
 import type { ProFormInstance } from '@ant-design/pro-components';
-import { ProForm, ProFormCheckbox, ProFormDatePicker, ProFormRadio, ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
+import { ProForm, ProFormCheckbox, ProFormDatePicker, ProFormRadio, ProFormText } from '@ant-design/pro-components';
 import { Button, message, Modal } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
-import { KcEnum, OpenTimeOptions, PermitOptions, RoleEnum, RoleOptions, XQEnum, XQOptions } from '../../config';
+import { PermitOptions, RoleEnum, RoleOptions } from '../../config';
 import request from 'umi-request';
 import { useUser } from '../../hooks/useUser';
 
+const waitTime = (time: number = 100) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(true);
+        }, time);
+    });
+};
 
-interface AddCourse{
-    id: string;
-    name: string;
-    code: string; // 课程代码
-    description?: string; // 课程描述
-    capacity: number; // 课程容量
-    xnId: number; // 学年id
-    xq: XQEnum; // 学期
-    openTime: KcEnum[] | any; // 开课时间
-    status?: number
-}
+type XnInfo = {
+    id?: number
+    name: string
+    status: number
+};
 
 interface OperatorProps {
     onSuccess: Function
@@ -26,7 +27,7 @@ interface OperatorProps {
     info: {
         open?: boolean
         mode: 'edit' | 'add'
-        data?: AddCourse
+        data?: XnInfo
     }
 }
 
@@ -41,13 +42,14 @@ const Operator = (props: OperatorProps) => {
             formRef.current?.setFieldsValue({
                 id: info.data?.id,
                 name: info.data?.name,
-                code: info.data?.code,
-                description: info.data?.description,
-                openTime: info.data?.openTime?.split(','),
                 status: info.data?.status,
             })
         } else if(info.mode === 'add' && info.open) {
             formRef.current?.resetFields()
+            formRef.current?.setFieldsValue({
+                password: '12345',
+                role: RoleEnum.STUDENT,
+            })
         }
     }, [info])
 
@@ -68,7 +70,7 @@ const Operator = (props: OperatorProps) => {
             formRef.current?.validateFields().then((values) => {
                 console.log('格式化后的所有数据：', values);
                 if (info.mode === 'add') {
-                    request('/api/course/add', {
+                    request('/api/xn/add', {
                         method: 'POST',
                         data: values,
                         headers: {
@@ -83,7 +85,7 @@ const Operator = (props: OperatorProps) => {
                         }
                     })
                 } else if (info.mode === 'edit') {
-                    request('/api/course/update', {
+                    request('/api/xn/update', {
                         method: 'POST',
                         data: values,
                         headers: {
@@ -104,24 +106,8 @@ const Operator = (props: OperatorProps) => {
         }
     }
 
-    async function requestXn() {
-        const res = await request('/api/xn/list', {
-            method: 'GET',
-            params: {
-                current: 1,
-                pageSize: 1000
-            },
-            headers: {
-                Authorization: `bearer ${user.user?.token}`
-            }
-        })
-        return res?.data.map((item: { name: any; id: any; }) => (
-            {label: item.name, value: item.id}
-        ))
-    }
-
     return (
-        <Modal open={info.open} title={info.mode === 'add' ? '新建课程' : '编辑课程'} width="768px" onCancel={() => onCancel()} onOk={() => handleOnOk()}>
+        <Modal open={info.open} title={info.mode === 'add' ? '新建' : '编辑'} onCancel={() => onCancel()} onOk={() => handleOnOk()}>
             <ProForm
                 title="新建表单"
                 formRef={formRef}
@@ -141,7 +127,7 @@ const Operator = (props: OperatorProps) => {
                 <ProFormText
                     width="md"
                     name="id"
-                    label="课程id"
+                    label="id"
                     disabled={info.mode === 'edit'}
                     hidden={info.mode === 'add'}
                     placeholder="请输入ID"
@@ -150,16 +136,10 @@ const Operator = (props: OperatorProps) => {
                 <ProFormText
                     width="md"
                     name="name"
-                    label="课程名称"
+                    label="名称"
                     placeholder="请输入名称"
                     required
                 />
-                <ProFormText width="md" name="code" label="课程编号" required placeholder="请输入编号" />
-                <ProFormText width="md" name="capacity" label="课程人数" required placeholder="请输入" />
-                <ProFormCheckbox.Group label="开课时间" name="openTime" required options={OpenTimeOptions} />
-                <ProFormRadio.Group label="课程类型" name="xq" required options={XQOptions} />
-                <ProFormSelect width="md" name="xnId" label="学年" required placeholder="请选择学年" request={requestXn} />
-                <ProFormTextArea width="md" name="description" label="课程描述"  placeholder="请输入" />
             </ProForm>
         </Modal>
     );

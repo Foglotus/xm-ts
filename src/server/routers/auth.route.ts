@@ -14,7 +14,7 @@ authRouter.post('/login', async (req, res) => {
         // md5对比
         const md5Password = md5(password);
         if (md5Password === user.password) {
-            const token = jwt.sign({ username: user.username, role: user.role }, SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ username: user.username, role: user.role, id: user.id, permit: user.permit }, SECRET, { expiresIn: '24h' });
             res.json({code: 0, data: {
                 token, id: user.id, role: user.role, name: user.name, username: user.username, permit: user.permit
             } });

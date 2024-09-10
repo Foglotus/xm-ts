@@ -1,8 +1,9 @@
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, message } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import request from 'umi-request';
+import Operator from './Operator';
 import { useUser } from '../../hooks/useUser';
 
 type GithubIssueItem = {
@@ -18,46 +19,12 @@ type GithubIssueItem = {
   updatedAt: string
 };
 
-interface SelectedProps {
-  id: number
-  xnId: number
-  courseId: number
-  userId: number
-  xq: string
-  openTime: string
-  status: number
-  createdAt: string
-  updatedAt: string
-}
-
-const HomePage = () => {
+const ChoosePage = () => {
+  const [openOperator, setOpenOperator] = useState<any>({
+    open: false,
+    mode: 'add',
+  });
   const actionRef = useRef<ActionType>();
-
-  const user = useUser()
-
-  const [selected, setSelected] = useState<SelectedProps[]>([])
-
-  const ids = selected.map(item => item.courseId) || []
-
-  useEffect(() => {
-    if (user.user) {
-      getSelectedData()
-    }
-  }, [user.user])
-
-  async function getSelectedData() {
-    try {
-      const res = await request('/api/choose/getSelected', {
-        headers: {
-          Authorization: 'bearer ' + user.user?.token
-       },
-      })
-      console.log("打印",res)
-      setSelected(res.data || [])
-    }catch(e) {
-      /** */
-    }
-  }
 
   const columns: ProColumns<GithubIssueItem>[] = [
     {
@@ -66,8 +33,8 @@ const HomePage = () => {
       width: 48,
     },
     {
-      title: '课程名',
-      dataIndex: 'name',
+      title: '课程名称',
+      dataIndex: ['CourseModel','name'],
       copyable: true,
       ellipsis: true,
       formItemProps: {
@@ -80,76 +47,33 @@ const HomePage = () => {
       },
     },
     {
-      title: '课程代号',
-      dataIndex: 'code',
-      copyable: true,
-      ellipsis: true,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '此项为必填项',
-          },
-        ],
-      },
-    },
-    {
-      title: '开课人数',
-      dataIndex: 'capacity',
-      ellipsis: true,
-      search: false,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '此项为必填项',
-          },
-        ],
-      },
-    },
-    {
-      title: '已选人数',
-      dataIndex: 'selected',
-      search: false,
-    },
-    {
-      disable: true,
-      title: '描述',
-      dataIndex: 'description',
-      search: false,
+      title: '创建时间',
+      key: 'showTime',
+      dataIndex: 'createdAt',
+      valueType: 'dateTime',
+      hideInSearch: true,
     },
     {
       title: '操作',
       valueType: 'option',
       key: 'option',
       render: (text, record, _, action) => [
-        <Button disabled={ids.includes(record.id)}  type='link' onClick={() => handleSelected(record.id) }>选课</Button>,
-        <Button disabled={!ids.includes(record.id)} type='link' danger onClick={() => handleDeSelected(record.id)}>退课</Button>,
+        <Button type='link' onClick={() => handleDeSelected((record as any).courseId)}>退课</Button>,
       ],
     },
   ];
-
-  async function handleSelected(courseId: number) {
+  
+  const user = useUser()
+  async function getSelectedData() {
     try {
-      const res = await request('/api/choose/select', {
-        method: 'POST',
+      const res = await request('/api/choose/getSelected', {
         headers: {
-           Authorization: 'bearer ' + user.user?.token
-        },
-        data: {
-          courseId
-        }
+          Authorization: 'bearer ' + user.user?.token
+       },
       })
-      if (res.code === 0) {
-        message.success('选课成功')
-        await getSelectedData()
-        actionRef.current?.reload()
-      } else {
-        message.error(res.message)
-      }
+      console.log("打印",res)
     }catch(e) {
       /** */
-
     }
   }
 
@@ -179,6 +103,15 @@ const HomePage = () => {
 
   return (
     <>
+      {/* 修改或者添加学年 */}
+      <Operator info={openOperator} onCancel={() => setOpenOperator({
+        open: false,
+      })} onSuccess={() => {
+        actionRef.current?.reload()
+        setOpenOperator({
+          open: false,
+        })
+      }} />
       <ProTable<GithubIssueItem>
         columns={columns}
         actionRef={actionRef}
@@ -186,8 +119,11 @@ const HomePage = () => {
         request={async (params = {}, sort, filter) => {
           return request<{
             data: GithubIssueItem[];
-          }>('/api/course/list', {
+          }>('/api/choose/getSelected', {
             params,
+            headers: {
+              'Authorization': 'bearer ' + localStorage.getItem('token') || '',
+            }
           });
         }}
         editable={{
@@ -226,10 +162,10 @@ const HomePage = () => {
           onChange: (page) => console.log(page),
         }}
         dateFormatter="string"
-        headerTitle={`已选(${selected?.length || 0}) : ${selected?.map((item:any) => item.CourseModel.name +'-'+ item.CourseModel.code)}`}
+        headerTitle="已选课程"
       />
     </>
   );
 };
 
-export default HomePage;
+export default ChoosePage;

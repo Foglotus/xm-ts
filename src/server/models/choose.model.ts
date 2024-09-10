@@ -3,6 +3,7 @@ import { sequelize } from "../db/index.js";
 import { XQEnum } from "../config.js";
 import { XnModel } from "./xn.model.js";
 import { UserModel } from "./user.model.js";
+import { CourseModel } from "./course.model.js";
 
 
 export class ChooseModel extends Model<
@@ -14,8 +15,8 @@ export class ChooseModel extends Model<
   declare xnId: ForeignKey<XnModel['id']>;
   declare userId: ForeignKey<UserModel['id']>;
   declare xq: XQEnum;
-  declare courseId: number;
-  declare openTime: number[];
+  declare courseId: ForeignKey<CourseModel['id']>;
+  declare openTime?: string;
   declare status: number;
 }
 
@@ -52,7 +53,7 @@ ChooseModel.init({
      * 开课时间标识
      */
     openTime: {
-      type: DataTypes.ARRAY,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     /**
@@ -67,14 +68,30 @@ ChooseModel.init({
      // 启用时间戳
     timestamps: true,
     sequelize: sequelize,
+    tableName: 'choose'
   });
+
+  CourseModel.hasOne(ChooseModel, {
+    foreignKey: 'courseId',
+  })
+
+  ChooseModel.belongsTo(CourseModel, {
+    foreignKey: 'courseId',
+  })
+
+  XnModel.hasOne(ChooseModel, {
+    foreignKey: 'xnId',
+  })
 
   ChooseModel.belongsTo(XnModel, {
     foreignKey: 'xnId',
-    targetKey: 'id',
+  })
+
+  UserModel.hasOne(ChooseModel, {
+    foreignKey: 'userId',
   })
 
   ChooseModel.belongsTo(UserModel, {
     foreignKey: 'userId',
-    targetKey: 'id',
   })
+  

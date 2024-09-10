@@ -70,4 +70,6 @@ UserModel.init({
     // 启用时间戳
     timestamps: true,
     sequelize,
+    tableName: 'user'
   });
+  

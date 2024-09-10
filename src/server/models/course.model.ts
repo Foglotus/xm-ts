@@ -88,8 +88,5 @@ CourseModel.init({
   // 启用时间戳
   timestamps: true,
   sequelize: sequelize,
+  tableName: 'course'
 });
-
-CourseModel.belongsTo(XnModel, {
-  foreignKey: 'xnId',
-})

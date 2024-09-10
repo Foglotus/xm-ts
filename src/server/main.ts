@@ -9,6 +9,7 @@ import { md5 } from "./tools/crypt.js";
 import { authRouter } from "./routers/auth.route.js";
 import { xnRouter } from "./routers/xn.route.js";
 import { courseRouter } from "./routers/course.route.js";
+import { chooseRouter } from "./routers/choose.route.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/xn', xnRouter)
 app.use('/api/course', courseRouter)
+app.use('/api/choose', chooseRouter)
 
 checkDbConnection().then(() => {
   ViteExpress.listen(app, 3000, () =>

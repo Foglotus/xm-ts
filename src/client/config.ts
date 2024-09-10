@@ -66,6 +66,17 @@ export enum RoleEnum {
     FIRST = "1",
     SECOND = "2"
   }
+
+  export const XQOptions = [
+    {
+      label: "第一学期",
+      value: XQEnum.FIRST
+    },
+    {
+      label: "第二学期",
+      value: XQEnum.SECOND
+    }
+  ]
   
   /**
    * 课程时间安排，星期一到星期五第一节到第八节课，采用唯一表示
